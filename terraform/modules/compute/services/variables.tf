@@ -1,0 +1,12 @@
+variable "compartment_ocid" { type = string }
+variable "availability_domain" { type = string }
+variable "instance_shape" { type = string }
+variable "memory_in_gbs" { type = number }
+variable "ocpus" { type = number }
+variable "boot_volume_size_in_gbs" { type = number }
+variable "display_name" { type = string }
+variable "subnet_id" { type = string }
+variable "ssh_public_key" { type = string }
+variable "cloudflare_tunnel_url" { type = string }
+variable "cloudflare_tunnel_token" { type = string }
+variable "image_ocid" { type = string }

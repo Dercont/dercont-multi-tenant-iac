@@ -1,0 +1,58 @@
+# .gitignore  
+.env
+
+# Cloudflare Tunnel files
+cloudflare/tunnel-token  
+cloudflare/*.sh
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.terraform.lock.hcl
+*terraform.tfvars
+
+# Terraform plan files
+*.tfplan
+
+# Directory for local Terraform configurations
+.terraform/
+
+# Exclude the lock file for Terraform providers (optional, if you want to keep track of the specific versions)
+# .terraform.lock.hcl
+
+# Sensitive files (e.g., containing credentials)
+# These files might include sensitive information; consider adding them to .gitignore
+# if you store credentials or other secrets in them.
+secrets.tfvars
+
+# Ignore editor swap files
+*.swp
+*.swo
+
+# Ignore MacOS system files
+.DS_Store
+
+# Ignore logs and temporary files
+*.log
+*.bak
+*.tmp
+
+# Ignore Linux and Windows swap files
+*.swp
+*.swo
+*.bak
+~$*
+
+# Ignore binary files
+*.bin
+*.exe
+*.dll
+*.so
+*.dylib

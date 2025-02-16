@@ -1,0 +1,9 @@
+variable "vcn_cidr_block" { type = string }
+variable "subnet_cidr_block" { type = string }
+variable "vcn_display_name" { type = string }
+variable "subnet_display_name" { type = string }
+variable "vcn_dns_label" { type = string }
+variable "subnet_dns_label" { type = string }
+variable "compartment_ocid" { type = string }
+variable "availability_domain" { type = string }
+variable "igw_display_name" { type = string }

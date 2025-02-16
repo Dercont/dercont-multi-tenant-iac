@@ -1,0 +1,6 @@
+tunnel: ${TUNNEL_ID}  
+credentials-file: ${CREDENTIALS_FILE}  
+ingress:  
+  - hostname: app.mydomain.com  
+    service: http://localhost:8000  
+  - service: http_status:404  
