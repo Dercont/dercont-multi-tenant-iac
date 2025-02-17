@@ -10,6 +10,8 @@ subnet_dns_label = "myproject-subnet"
 compartment_ocid = "ocid1.tenancy.oc1..<ID>"  
 availability_domain = "Sohw:EU-MADRID-1-AD-1"  
 igw_display_name = "myproject-igw"  
+allowed_cidrs = ["192.168.0.0/16"]  
+admin_cidr = "0.0.0.0/0" # Restrict to your admin network  
   
 # Control Plane  
 control_plane_memory_in_gbs = 8  
@@ -17,6 +19,9 @@ control_plane_ocpus = 2
 control_plane_boot_volume_size_in_gbs = 80  
 control_plane_display_name = "myproject-control-plane"  
 instance_shape = "VM.Standard.A1.Flex"  
+project_name = "myproject"  
+owner_email = "admin@example.com"  
+cost_center = "engineering"  
   
 # Services  
 services_memory_in_gbs = 16  
@@ -35,3 +40,7 @@ user_ocid = "ocid1.user.oc1..<ID>"
 api_fingerprint = "xx:xx:xx:xx:xx:xx"  
 api_private_key_path = "~/.oci/oci_api_key.pem"  
 region = "eu-madrid-1"  
+  
+# R2 Backend  
+r2_access_key = "your-r2-access-key"  
+r2_secret_key = "your-r2-secret-key"  

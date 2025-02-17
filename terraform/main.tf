@@ -1,27 +1,36 @@
-terraform {
-  required_providers {
-    oci = {
-      source  = "oracle/oci"
-      version = "5.30.0"
-    }
-  }
-}
+terraform {  
+  required_providers {  
+    oci = {  
+      source = "oracle/oci"  
+      version = "~> 5.30.0"  
+    }  
+  }  
 
-module "provider" {
-  source  = "./providers/${var.provider_name}"
-}
+  backend "s3" {  
+    bucket                 = "myproject-terraform-state"  
+    key                    = "oci-infra/terraform.tfstate"  
+    region                 = "eu-central-1"  
+    encrypt                = true  
+    dynamodb_table         = "myproject-terraform-lock"  
+    workspace_key_prefix   = "oci-infra/"  
+  }  
+}  
 
-module "networking" {
-  source  = "./modules/networking"
-  provider = provider.oci
-}
+module "provider" {  
+  source  = "./providers/${var.provider_name}"  
+}  
 
-module "control_plane" {
-  source  = "./modules/compute/control_plane"
-  provider = provider.oci
-}
+module "networking" {  
+  source  = "./modules/networking"  
+  provider = provider.oci  
+}  
 
-module "services" {
-  source  = "./modules/compute/services"
-  provider = provider.oci
-}
+module "control_plane" {  
+  source  = "./modules/compute/control_plane"  
+  provider = provider.oci  
+}  
+
+module "services" {  
+  source  = "./modules/compute/services"  
+  provider = provider.oci  
+}  

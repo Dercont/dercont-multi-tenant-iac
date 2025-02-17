@@ -1,29 +1,44 @@
-resource "oci_core_instance" "control_plane" {
-  availability_domain = var.availability_domain
-  compartment_id      = var.compartment_ocid
-  shape               = var.instance_shape
+resource "random_password" "coolify_secret" {  
+  length   = 32  
+  special  = true  
+}  
 
-  create_vnic_details {
-    subnet_id = oci_core_subnet.gw-subnet.id
-  }
+resource "random_password" "coolify_db_password" {  
+  length   = 16  
+  special  = true  
+} 
 
-  shape_config {
-    memory_in_gbs = var.memory_in_gbs
-    ocpus         = var.ocpus
-  }
+resource "oci_core_instance" "control_plane" {  
+  availability_domain = var.availability_domain  
+  compartment_id      = var.compartment_ocid  
+  shape               = var.instance_shape  
 
-  metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key)
-    user_data = base64encode(templatefile("${path.module}/user_data.tpl", {
-      docker_compose_url = var.docker_compose_url
-    }))
-  }
+  create_vnic_details {  
+    subnet_id = module.networking.control_plane_subnet_id  
+  }  
 
-  source_details {
-    source_type = "image"
-    source_id   = var.image_ocid
-  }
+  shape_config {  
+    memory_in_gbs = var.memory_in_gbs  
+    ocpus         = var.ocpus  
+  }  
 
-  display_name = var.display_name
-  boot_volume_size_in_gbs = var.boot_volume_size_in_gbs
-}
+  metadata = {  
+    ssh_authorized_keys = file(var.ssh_public_key)  
+    user_data = base64encode(templatefile("${path.module}/user_data.tpl", {  
+      docker_compose_url = var.docker_compose_url  
+      cloudflare_tunnel_url = var.cloudflare_tunnel_url  
+      cloudflare_tunnel_token = var.cloudflare_tunnel_token  
+      coolify_secret = var.coolify_secret  
+      coolify_db_password = var.coolify_db_password  
+    }))  
+  }  
+
+  source_details {  
+    source_type = "image"  
+    source_id   = var.image_ocid  
+  }  
+
+  display_name = format("%s-%s-control-plane", var.project_name, terraform.workspace)  
+  defined_tags = local.mandatory_tags  
+  freeform_tags = var.additional_tags  
+}  
