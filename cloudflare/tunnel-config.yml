@@ -1,6 +1,5 @@
-tunnel: ${TUNNEL_ID}  
-credentials-file: ${CREDENTIALS_FILE}  
+tunnel: your-tunnel-id  
+credentials-file: /etc/cloudflared/tunnel-token  
 ingress:  
-  - hostname: app.mydomain.com  
+  - hostname: app.example.com  
     service: http://localhost:8000  
-  - service: http_status:404  

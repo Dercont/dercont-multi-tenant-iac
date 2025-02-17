@@ -4,19 +4,18 @@ services:
     image: coolify/coolify:latest  
     ports:  
       - "8000:8000"  
-    env_file: .env # Load variables from .env  
     environment:  
       - COOLIFY_ENV=production  
       - DB_HOST=db  
       - DB_PORT=5432  
-      - DB_USER=${COOLIFY_DB_USER}  
+      - DB_USER=coolify  
       - DB_PASSWORD=${COOLIFY_DB_PASSWORD}  
-      - DB_NAME=${COOLIFY_DB_NAME}  
+      - SECRET_KEY=${COOLIFY_SECRET}  
     depends_on:  
       - db  
   db:  
     image: postgres:14  
     environment:  
-      - POSTGRES_USER=${COOLIFY_DB_USER}  
+      - POSTGRES_USER=coolify  
       - POSTGRES_PASSWORD=${COOLIFY_DB_PASSWORD}  
-      - POSTGRES_DB=${COOLIFY_DB_NAME}  
+      - POSTGRES_DB=coolify  

@@ -12,25 +12,13 @@ terraform {
     region                 = "eu-central-1"  
     encrypt                = true  
     dynamodb_table         = "myproject-terraform-lock"  
-    workspace_key_prefix   = "oci-infra/"  
   }  
 }  
 
-module "provider" {  
-  source  = "./providers/${var.provider_name}"  
-}  
-
-module "networking" {  
-  source  = "./modules/networking"  
-  provider = provider.oci  
-}  
-
-module "control_plane" {  
-  source  = "./modules/compute/control_plane"  
-  provider = provider.oci  
-}  
-
-module "services" {  
-  source  = "./modules/compute/services"  
-  provider = provider.oci  
+provider "oci" {  
+  tenancy_ocid     = var.tenancy_ocid  
+  user_ocid        = var.user_ocid  
+  fingerprint      = var.api_fingerprint  
+  private_key_path = var.api_private_key_path  
+  region           = var.region  
 }  

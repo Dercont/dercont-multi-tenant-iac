@@ -1,13 +1,3 @@
-resource "random_password" "coolify_secret" {  
-  length   = 32  
-  special  = true  
-}  
-
-resource "random_password" "coolify_db_password" {  
-  length   = 16  
-  special  = true  
-} 
-
 resource "oci_core_instance" "control_plane" {  
   availability_domain = var.availability_domain  
   compartment_id      = var.compartment_ocid  
@@ -28,8 +18,8 @@ resource "oci_core_instance" "control_plane" {
       docker_compose_url = var.docker_compose_url  
       cloudflare_tunnel_url = var.cloudflare_tunnel_url  
       cloudflare_tunnel_token = var.cloudflare_tunnel_token  
-      coolify_secret = var.coolify_secret  
-      coolify_db_password = var.coolify_db_password  
+      coolify_secret = random_password.coolify_secret.result  
+      coolify_db_password = random_password.coolify_db_password.result  
     }))  
   }  
 
@@ -41,4 +31,14 @@ resource "oci_core_instance" "control_plane" {
   display_name = format("%s-%s-control-plane", var.project_name, terraform.workspace)  
   defined_tags = local.mandatory_tags  
   freeform_tags = var.additional_tags  
+}  
+
+resource "random_password" "coolify_secret" {  
+  length   = 32  
+  special  = true  
+}  
+
+resource "random_password" "coolify_db_password" {  
+  length   = 16  
+  special  = true  
 }  
